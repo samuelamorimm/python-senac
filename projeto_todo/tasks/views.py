@@ -1,5 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import Task
+from .forms import TaskForm
 
 # Create your views here.
 def task_list(request):
@@ -14,6 +15,6 @@ def task_update(request, pk):
         if form.is_valid():
             form.save()
             return redirect(task_list)
-        else:
-            form = TaskForm(instance=task)
-            return render(request, 'tasks/task_update.html', {'form':form, 'task': task})
+    else:
+        form = TaskForm(instance=task)
+        return render(request, 'tasks/task_update.html', {'form':form, 'task': task})
